@@ -1,0 +1,76 @@
+version: '3'
+services:
+  product-core-service:
+    image: jadecoma/product-core-service
+    container_name: product-core-service
+    depends_on:
+      - eureka-server
+    command: >
+      /bin/bash -c "
+        nc -z eureka-server 8761 &&
+        echo Connected to EUREKA and started!
+      "
+    external_links:
+     - mysql-product-service:mysql
+    ports:
+    - "9000:8080"
+    environment:
+      server.port: 8080
+      eureka.client.enabled: 'true'
+      eureka.host: eureka-server
+      eureka.instance.preferIpAddress: 'true'
+
+
+  customer-core-service:
+    image: jadecoma/customer-core-service
+    container_name: customer-core-service
+    depends_on:
+     - eureka-server
+    command: >
+      /bin/bash -c "
+        nc -z eureka-server 8761 &&
+        echo Connected to EUREKA and started!
+      "
+    external_links:
+     - mysql-customer-service:mysql
+    ports:
+    - "9001:8080"
+    environment:
+      server.port: 8080
+      eureka.client.enabled: 'true'
+      eureka.host: eureka-server
+      eureka.instance.preferIpAddress: 'true'
+      WAIT_HOSTS: eureka-server:8761
+
+
+  db-products:
+    image: mysql:5.6
+    container_name: mysql-product-service
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vis-shop-product
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+
+
+  db-customers:
+    image: mysql:5.6
+    container_name: mysql-customer-service
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vis-shop-customer
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+
+
+  eureka-server:
+    image: jadecoma/eureka-server
+    ports:
+    - "8761:8761"
+
+
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - eureka-server
+    command: eureka-server:8761
