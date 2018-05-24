@@ -11,6 +11,7 @@
     <modules>
         <module>product-core-service</module>
         <module>customer-core-service</module>
+        <module>category-core-service</module>
         <module>eureka-server</module>
     </modules>
 
