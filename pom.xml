@@ -9,10 +9,14 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>product-core-service</module>
-        <module>customer-core-service</module>
-        <module>category-core-service</module>
-        <module>eureka-server</module>
+        <module>core/product-core-service</module>
+        <module>core/customer-core-service</module>
+        <module>core/category-core-service</module>
+        <module>support/eureka-server</module>
+        <!--<module>support/hystrix</module>-->
+        <!--<module>support/hystrix-dashboard</module>-->
+        <!--<module>support/ribbon</module>-->
+        <module>support/zuul</module>
     </modules>
 
 </project>

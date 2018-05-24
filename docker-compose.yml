@@ -12,13 +12,6 @@ services:
       "
     external_links:
      - mysql-product-service:mysql
-    ports:
-    - "9000:8080"
-    environment:
-      server.port: 8080
-      eureka.client.enabled: 'true'
-      eureka.host: eureka-server
-      eureka.instance.preferIpAddress: 'true'
 
 
   customer-core-service:
@@ -33,13 +26,6 @@ services:
       "
     external_links:
      - mysql-customer-service:mysql
-    ports:
-    - "9001:8080"
-    environment:
-      server.port: 8080
-      eureka.client.enabled: 'true'
-      eureka.host: eureka-server
-      eureka.instance.preferIpAddress: 'true'
 
 
   category-core-service:
@@ -54,13 +40,6 @@ services:
       "
     external_links:
      - mysql-category-service:mysql
-    ports:
-    - "9002:8080"
-    environment:
-      server.port: 8080
-      eureka.client.enabled: 'true'
-      eureka.host: eureka-server
-      eureka.instance.preferIpAddress: 'true'
 
 
   db-products:
@@ -95,12 +74,22 @@ services:
 
   eureka-server:
     image: jadecoma/eureka-server
+    container_name: eureka-server
     ports:
     - "8761:8761"
 
 
+  zuul:
+    image: jadecoma/zuul
+    container_name: zuul
+    depends_on:
+    - eureka-server
+    ports:
+    - "9090:9090"
+
   start_dependencies:
     image: dadarek/wait-for-dependencies
+    container_name: start_dependencies
     depends_on:
       - eureka-server
     command: eureka-server:8761
