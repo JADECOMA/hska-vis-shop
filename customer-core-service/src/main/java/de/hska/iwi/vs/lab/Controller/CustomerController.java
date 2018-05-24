@@ -5,6 +5,8 @@ import de.hska.iwi.vs.lab.Entity.LoginData;
 import de.hska.iwi.vs.lab.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,30 +15,28 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping()
-    @ResponseBody
-    public HttpStatus addCustomer(@RequestBody Customer customer) {
-        return customerService.addCustomer(customer);
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+        HttpStatus status = customerService.addCustomer(customer);
+        return new ResponseEntity<>(status);
     }
 
-    @GetMapping()
-    @ResponseBody
-    public Iterable<Customer> listCustomer() {
-        return customerService.listCustomer();
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> listCustomer() {
+        return new ResponseEntity<>(customerService.listCustomer(), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    public HttpStatus login(@RequestBody LoginData loginData) {
-        return customerService.login(loginData);
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
+        return new ResponseEntity<>(customerService.login(loginData), HttpStatus.OK);
     }
 
-    @GetMapping("/logout")
-    public HttpStatus logout() {
-        return HttpStatus.OK;
+    @GetMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> logout() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping("/test/{testIt}")
+    @GetMapping(value = "/test/{testIt}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String ok(@PathVariable String testIt) {
         return testIt;
     }

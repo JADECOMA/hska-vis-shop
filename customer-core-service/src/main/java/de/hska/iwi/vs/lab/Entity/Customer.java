@@ -55,7 +55,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Person [name=" + this.name + "," +
+        return "Customer [name=" + this.name + "," +
                 " lastname=" + this.lastname + "," +
                 " password=" + this.password + "," +
                 " username=" + this.username + "," +
