@@ -40,7 +40,27 @@ services:
       eureka.client.enabled: 'true'
       eureka.host: eureka-server
       eureka.instance.preferIpAddress: 'true'
-      WAIT_HOSTS: eureka-server:8761
+
+
+  category-core-service:
+    image: jadecoma/category-core-service
+    container_name: category-core-service
+    depends_on:
+     - eureka-server
+    command: >
+      /bin/bash -c "
+        nc -z eureka-server 8761 &&
+        echo Connected to EUREKA and started!
+      "
+    external_links:
+     - mysql-category-service:mysql
+    ports:
+    - "9002:8080"
+    environment:
+      server.port: 8080
+      eureka.client.enabled: 'true'
+      eureka.host: eureka-server
+      eureka.instance.preferIpAddress: 'true'
 
 
   db-products:
@@ -59,6 +79,16 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: vis-shop-customer
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+
+
+  db-categories:
+    image: mysql:5.6
+    container_name: mysql-category-service
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: vis-shop-category
       MYSQL_USER: demo_user
       MYSQL_PASSWORD: demo_pass
 
