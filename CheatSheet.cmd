@@ -1,5 +1,5 @@
-docker stop customer-core-service product-core-service mysql-customer-service mysql-product-service eureka-server zuul &
-docker rm customer-core-service product-core-service mysql-customer-service mysql-product-service eureka-server zuul
+docker stop category-core-service customer-core-service product-core-service mysql-category-service mysql-customer-service mysql-product-service eureka-server zuul &
+docker rm category-core-service customer-core-service product-core-service mysql-category-service mysql-customer-service mysql-product-service eureka-server zuul
 
 docker run -p 8761:8761 --name eureka-server -d jadecoma/eureka-server
 
