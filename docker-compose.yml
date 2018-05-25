@@ -26,8 +26,8 @@ services:
       "
     external_links:
      - mysql-customer-service:mysql
-    expose:
-      - "9010"
+#    expose:
+#      - "9010"
 
 
   category-core-service:

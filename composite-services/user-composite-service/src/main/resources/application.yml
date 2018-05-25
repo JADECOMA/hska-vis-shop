@@ -4,8 +4,6 @@ server:
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5
-    metadataMap:
-    instanceId: "${spring.application.name}:${random.value}"
 #    leaseRenewalIntervalInSeconds: 1
 #    leaseExpirationDurationInSeconds: 2
   client:
