@@ -3,15 +3,16 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.springframework</groupId>
+    <groupId>de.hska.iwi.vs.lab</groupId>
     <artifactId>hska-micro-service-backend</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>core/product-core-service</module>
         <module>core/customer-core-service</module>
         <module>core/category-core-service</module>
+        <!--<module>composite/category-composite-service</module>-->
         <module>support/eureka-server</module>
         <!--<module>support/hystrix</module>-->
         <!--<module>support/hystrix-dashboard</module>-->

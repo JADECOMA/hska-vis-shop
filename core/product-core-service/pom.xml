@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>de.hska.iwi.vs.lab.ProductCoreService</start-class>
+		<start-class>de.hska.iwi.vs.lab.core.product.ProductCoreService</start-class>
 		<docker.image.prefix>jadecoma</docker.image.prefix>
 	</properties>
 
