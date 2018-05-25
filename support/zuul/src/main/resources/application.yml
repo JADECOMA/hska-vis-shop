@@ -19,11 +19,13 @@ zuul:
       url: http://product-core-service:9000
     customers:
       path: /customers/**
-      url: http://customer-core-service:9001
+      url: http://customer-core-service:9010
     categories:
       path: /categories/**
-      url: http://category-core-service:9002
-
+      url: http://category-core-service:9020
+    tests:
+      path: /tests/**
+      url: http://user-composite-service:9050
 spring:
   application:
     name: zuul-server

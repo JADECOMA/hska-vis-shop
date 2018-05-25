@@ -47,4 +47,11 @@ public class CustomerController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findById(@PathVariable int customerId) {
+        log.info("URL-PATH: /{customerId} | METHOD: GET");
+
+        return new ResponseEntity<>(customerService.findById(customerId), HttpStatus.OK);
+    }
 }

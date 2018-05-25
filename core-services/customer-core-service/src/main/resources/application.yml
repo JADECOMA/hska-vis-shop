@@ -1,17 +1,20 @@
 server:
-  port: ${server_port:9001}
+  port: ${server_port:9010}
 
 eureka:
   instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
+    leaseRenewalIntervalInSeconds: 5
+    metadataMap:
+    instanceId: "${spring.application.name}:${random.value}"
+#    leaseRenewalIntervalInSeconds: 1
+#    leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
       defaultZone: ${eureka_url:http://eureka-server:8761/eureka/}
-    healthcheck:
-      enabled: true
-    lease:
-      duration: 5
+#    healthcheck:
+#      enabled: true
+#    lease:
+#      duration: 5
 
 spring:
   application:

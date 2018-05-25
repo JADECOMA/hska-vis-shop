@@ -22,6 +22,7 @@
         <core.category>category-core-service</core.category>
         <core.customer>customer-core-service</core.customer>
         <core.product>product-core-service</core.product>
+        <core.test>test-core-service</core.test>
     </properties>
 
     <dependencies>

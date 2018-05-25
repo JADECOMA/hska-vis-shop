@@ -47,6 +47,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public Customer findById(int customerId) {
+        return customerRepository.findById(customerId);
+    }
+
     private boolean validate(Customer customer) {
         return filterName()
                 .and(filterLastName())

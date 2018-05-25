@@ -1,9 +1,11 @@
 server:
-  port: ${server_port:9000}
+  port: ${server_port:9050}
 
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5
+    metadataMap:
+    instanceId: "${spring.application.name}:${random.value}"
 #    leaseRenewalIntervalInSeconds: 1
 #    leaseExpirationDurationInSeconds: 2
   client:
@@ -16,19 +18,10 @@ eureka:
 
 spring:
   application:
-    name: product-core-service
+    name: user-composite-service
   devtools:
     remote:
       secret: mysecret
-  jpa:
-    database: MYSQL
-    hibernate:
-      ddl-auto: validate
-  datasource:
-    url: jdbc:mysql://mysql:3306/vis-shop-product
-    username: demo_user
-    password: demo_pass
-    driver-class-name: com.mysql.jdbc.Driver
 
 management:
   security:

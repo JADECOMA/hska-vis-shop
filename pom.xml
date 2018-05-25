@@ -9,11 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--<module>core/product-core-service</module>-->
-        <!--<module>core/customer-core-service</module>-->
-        <!--<module>core/category-core-service</module>-->
-        <!--<module>composite/category-composite-service</module>-->
         <module>core-services</module>
+        <module>composite-services/user-composite-service</module>
         <module>support/zuul</module>
         <module>support/eureka-server</module>
         <!--<module>support/hystrix</module>-->

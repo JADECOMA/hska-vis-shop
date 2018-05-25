@@ -49,15 +49,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!--<build>-->
-		<!--<plugins>-->
-			<!--<plugin>-->
-				<!--<groupId>org.springframework.boot</groupId>-->
-				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-			<!--</plugin>-->
-		<!--</plugins>-->
-	<!--</build>-->
-
 	<build>
 		<finalName>zuul</finalName>
 		<plugins>
@@ -71,11 +62,8 @@
 				<version>0.4.13</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-
 					<baseImage>java:8</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,suspend=n"]</entryPoint>
-
-					<!--<dockerDirectory>src/main/docker</dockerDirectory>-->
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -84,7 +72,6 @@
 						</resource>
 					</resources>
 				</configuration>
-
 				<executions>
 					<execution>
 						<id>build-image</id>
@@ -94,7 +81,6 @@
 						</goals>
 					</execution>
 				</executions>
-
 			</plugin>
 		</plugins>
 	</build>
@@ -117,6 +103,4 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
-
 </project>

@@ -16,7 +16,7 @@ services:
 
   customer-core-service:
     image: jadecoma/customer-core-service
-    container_name: customer-core-service
+#    container_name: customer-core-service
     depends_on:
      - eureka-server
     command: >
@@ -26,6 +26,8 @@ services:
       "
     external_links:
      - mysql-customer-service:mysql
+    expose:
+      - "9010"
 
 
   category-core-service:
@@ -41,6 +43,17 @@ services:
     external_links:
      - mysql-category-service:mysql
 
+
+  user-composite-service:
+    image: jadecoma/user-composite-service
+    container_name: user-composite-service
+    depends_on:
+     - eureka-server
+    command: >
+      /bin/bash -c "
+        nc -z eureka-server 8761 &&
+        echo Connected to EUREKA and started!
+      "
 
   db-products:
     image: mysql:5.6
