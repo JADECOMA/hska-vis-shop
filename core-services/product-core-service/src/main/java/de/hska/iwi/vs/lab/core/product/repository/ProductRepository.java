@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
-    Product findById(int id);
+public interface ProductRepository extends CrudRepository<Product, Integer> {
     List<Product> findDistinctProductByNameContainingOrDetailsContainingOrPriceBetweenOrCategoryIdAllIgnoreCase(String name, String details, double minPrice, double maxPrice, int category_id);
 }

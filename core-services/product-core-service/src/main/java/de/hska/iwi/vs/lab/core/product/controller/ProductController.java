@@ -36,15 +36,13 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable int productId) {
         log.info("URL-PATH: /{productId} | METHOD: DELETE");
 
-        HttpStatus status = productService.deleteProduct(productId);
-        return new ResponseEntity<>(status);
+        return new ResponseEntity<>( productService.deleteProduct(productId));
     }
 
     @PutMapping()
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         log.info("URL-PATH: / | METHOD: PUT");
 
-        HttpStatus status = productService.addProduct(product);
-        return new ResponseEntity<>(status);
+        return new ResponseEntity<>(productService.addProduct(product));
     }
 }

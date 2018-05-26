@@ -8,10 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Component
 public class CustomerService {
+
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -47,7 +49,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer findById(int customerId) {
+    public Optional<Customer> findById(int customerId) {
         return customerRepository.findById(customerId);
     }
 

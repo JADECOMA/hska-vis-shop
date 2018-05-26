@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Service
@@ -34,7 +35,7 @@ public class ProductService {
         return productRepository.findDistinctProductByNameContainingOrDetailsContainingOrPriceBetweenOrCategoryIdAllIgnoreCase(searchPhrase, searchPhrase, minPrice, maxPrice, category_id);
     }
 
-    public Product findById(int productId) {
+    public Optional<Product> findById(int productId) {
         return productRepository.findById(productId);
     }
 
@@ -55,7 +56,7 @@ public class ProductService {
     }
 
     public HttpStatus deleteProduct(int productId) {
-        productRepository.deleteById(new Long(productId));
+        productRepository.deleteById(productId);
         return HttpStatus.ACCEPTED;
     }
 

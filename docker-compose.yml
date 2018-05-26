@@ -5,6 +5,8 @@ services:
     container_name: product-core-service
     depends_on:
       - eureka-server
+    ports:
+      - "9000:8080"
     command: >
       /bin/bash -c "
         nc -z eureka-server 8761 &&
@@ -19,6 +21,8 @@ services:
 #    container_name: customer-core-service
     depends_on:
      - eureka-server
+    ports:
+      - "9010:8080"
     command: >
       /bin/bash -c "
         nc -z eureka-server 8761 &&
@@ -26,8 +30,6 @@ services:
       "
     external_links:
      - mysql-customer-service:mysql
-#    expose:
-#      - "9010"
 
 
   category-core-service:
@@ -35,6 +37,8 @@ services:
     container_name: category-core-service
     depends_on:
      - eureka-server
+    ports:
+      - "9020:8080"
     command: >
       /bin/bash -c "
         nc -z eureka-server 8761 &&
@@ -54,6 +58,8 @@ services:
         nc -z eureka-server 8761 &&
         echo Connected to EUREKA and started!
       "
+    ports:
+      - "9050:8080"
 
   db-products:
     image: mysql:5.6

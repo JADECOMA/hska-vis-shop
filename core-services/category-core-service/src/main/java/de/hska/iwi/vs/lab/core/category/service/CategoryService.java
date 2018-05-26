@@ -15,9 +15,9 @@ public class CategoryService {
 
     public HttpStatus addCategory(Category category) {
         if (validate(category)) {
-            Category newCustomer = new Category();
-            newCustomer.setName(category.getName());
-            categoryRepository.save(newCustomer);
+            Category newCategory = new Category();
+            newCategory.setName(category.getName());
+            categoryRepository.save(newCategory);
 
             return HttpStatus.CREATED;
         } else {
@@ -25,7 +25,7 @@ public class CategoryService {
         }
     }
     public HttpStatus deleteCategory(int categoryId) {
-        categoryRepository.deleteById(new Long(categoryId));
+        categoryRepository.deleteById(categoryId);
         return HttpStatus.ACCEPTED;
     }
 

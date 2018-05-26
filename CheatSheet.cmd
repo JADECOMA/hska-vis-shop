@@ -35,3 +35,20 @@ docker run -p 8761:8761 --name eureka-server -d jadecoma/eureka-server
 docker run -p 9090:9090 --name zuul -d jadecoma/zuul
 docker run --name mysql-product-service -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=vis-shop-product -e MYSQL_USER=demo_user -e MYSQL_PASSWORD=demo_pass -d mysql:5.6
 docker run -p 9000:8080 --name product-core-service --link eureka-server --link zuul --link mysql-product-service:mysql -d jadecoma/product-core-service
+
+
+docker stop user-composite-service &
+docker rm user-composite-service &
+docker run -p 9050:8080 --name user-composite-service -d jadecoma/user-composite-service
+
+docker stop customer-core-service mysql-customer-service eureka-server &
+docker rm customer-core-service mysql-customer-service eureka-server &
+docker run -p 8761:8761 --name eureka-server -d jadecoma/eureka-server
+docker run -p 3307:3306 --name mysql-customer-service -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=vis-shop-customer -e MYSQL_USER=demo_user -e MYSQL_PASSWORD=demo_pass -d mysql:5.6
+docker run -p 9010:9010 --name customer-core-service --link eureka-server --link mysql-customer-service:mysql -d jadecoma/customer-core-service
+
+docker stop user-composite-service &
+docker rm user-composite-service &
+docker run -p 9050:9050 --name user-composite-service --link eureka-server -d jadecoma/user-composite-service
+
+docker run -p 9050:9050 --name user-composite-service --link customer-core-service --link eureka-server -d jadecoma/user-composite-service

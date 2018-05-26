@@ -23,8 +23,8 @@ zuul:
     categories:
       path: /categories/**
       url: http://category-core-service:9020
-    tests:
-      path: /tests/**
+    portfolio:
+      path: /portfolio/**
       url: http://user-composite-service:9050
 spring:
   application:
