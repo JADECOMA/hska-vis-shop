@@ -30,7 +30,7 @@ public class UserCompositeController {
     }
 
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> blub(@PathVariable("userId") int userId) {
+    public ResponseEntity<User> getUserById(@PathVariable("userId") int userId) {
         log.info("COMPOSITE URL-PATH: /{userId} | METHOD: GET");
 
         return userService.findById(userId);

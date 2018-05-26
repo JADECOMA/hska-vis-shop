@@ -29,6 +29,10 @@ public class CategoryService {
         return HttpStatus.ACCEPTED;
     }
 
+    public Iterable<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
     private boolean validate(Category category) {
         return filterName()
                 .test(category);

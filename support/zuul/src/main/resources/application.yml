@@ -14,18 +14,24 @@ zuul:
 #  ignoredServices: '*'
 
   routes:
-    products:
-      path: /products/**
-      url: http://product-core-service:9000
-    customers:
-      path: /customers/**
-      url: http://customer-core-service:9010
-    categories:
-      path: /categories/**
-      url: http://category-core-service:9020
+#    products:
+#      path: /products/**
+#      url: http://product-core-service:9000
+#    customers:
+#      path: /customers/**
+#      url: http://customer-core-service:9010
+#    categories:
+#      path: /categories/**
+#      url: http://category-core-service:9020
     portfolio:
       path: /portfolio/**
-      url: http://user-composite-service:9050
+      url: http://portfolio-composite-service:9300
+    products:
+      path: /products/**
+      url: http://product-composite-service:9200
+#    customers:
+#      path: /customers/**
+#      url: http://user-composite-service:9100
 spring:
   application:
     name: zuul-server

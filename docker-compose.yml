@@ -48,20 +48,54 @@ services:
       - mysql-category-service:mysql
 
 
-  user-composite-service:
-    image: jadecoma/user-composite-service
-    container_name: user-composite-service
+#  user-composite-service:
+#    image: jadecoma/user-composite-service
+#    container_name: user-composite-service
+#    depends_on:
+#      - eureka-server
+#    external_links:
+#      - customer-core-service
+#    command: >
+#      /bin/bash -c "
+#      nc -z eureka-server 8761 &&
+#      echo Connected to EUREKA and started!
+#      "
+#    ports:
+#      - "9100:9100"
+
+
+  product-composite-service:
+    image: jadecoma/product-composite-service
+    container_name: product-composite-service
     depends_on:
       - eureka-server
     external_links:
-      - customer-core-service
+      - product-core-service
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&
       echo Connected to EUREKA and started!
       "
     ports:
-      - "9050:9050"
+      - "9200:9200"
+
+
+  portfolio-composite-service:
+    image: jadecoma/portfolio-composite-service
+    container_name: portfolio-composite-service
+    depends_on:
+      - eureka-server
+    external_links:
+      - product-core-service
+      - category-core-service
+    command: >
+      /bin/bash -c "
+      nc -z eureka-server 8761 &&
+      echo Connected to EUREKA and started!
+      "
+    ports:
+      - "9300:9300"
+
 
   db-products:
     image: mysql:5.6

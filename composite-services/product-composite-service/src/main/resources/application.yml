@@ -1,5 +1,5 @@
 server:
-  port: ${server_port:9100}
+  port: ${server_port:9200}
 
 eureka:
   instance:
@@ -10,7 +10,7 @@ eureka:
 
 spring:
   application:
-    name: user-composite-service
+    name: product-composite-service
   devtools:
     remote:
       secret: mysecret

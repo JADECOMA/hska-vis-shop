@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class CustomerController {
 
@@ -20,7 +22,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PutMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<HttpStatus> addCustomer(@RequestBody Customer customer) {
         log.info("\tURL-PATH: / | METHOD: PUT");
 
         HttpStatus status = customerService.addCustomer(customer);
@@ -28,14 +30,14 @@ public class CustomerController {
     }
 
     @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> listCustomer() {
+    public ResponseEntity<Iterable<Customer>> listCustomer() {
         log.info("\tURL-PATH: / | METHOD: GET");
 
         return new ResponseEntity<>(customerService.listCustomer(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
+    public ResponseEntity<HttpStatus> login(@RequestBody LoginData loginData) {
         log.info("\tURL-PATH: /login | METHOD: POST");
 
         return new ResponseEntity<>(customerService.login(loginData), HttpStatus.OK);
@@ -49,7 +51,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findById(@PathVariable int customerId) {
+    public ResponseEntity<Optional<Customer>> findById(@PathVariable int customerId) {
         log.info("\tURL-PATH: /{customerId} | METHOD: GET");
 
         return new ResponseEntity<>(customerService.findById(customerId), HttpStatus.OK);

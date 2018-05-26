@@ -2,6 +2,8 @@ package de.hska.iwi.vs.lab.core.product.service;
 
 import de.hska.iwi.vs.lab.core.product.entity.Product;
 import de.hska.iwi.vs.lab.core.product.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.function.Predicate;
 
 @Service
 public class ProductService {
+
+    private static Logger log = LoggerFactory.getLogger(ProductService.class);
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -19,24 +24,31 @@ public class ProductService {
         double price = 0.0;
         double minPrice = 0.0;
         double maxPrice = 0.0;
-        try {
-            price = Double.parseDouble(searchPhrase);
-            minPrice = price - 0.5;
-            maxPrice = price + 0.5;
-        } catch (Exception e) {
-        }
-
         int category_id = 0;
-        try {
-            category_id = Integer.parseInt(searchPhrase);
-        } catch (Exception e) {
-        }
+
+//        try {
+//            price = Double.parseDouble(searchPhrase);
+//            minPrice = price - 0.5;
+//            maxPrice = price + 0.5;
+//        } catch (Exception e) {
+//            log.info("\t\t\tCATCH price");
+//        }
+//
+//        try {
+//            category_id = Integer.parseInt(searchPhrase);
+//        } catch (Exception e) {
+//            log.info("\t\t\tCATCH category_id");
+//        }
 
         return productRepository.findDistinctProductByNameContainingOrDetailsContainingOrPriceBetweenOrCategoryIdAllIgnoreCase(searchPhrase, searchPhrase, minPrice, maxPrice, category_id);
     }
 
     public Optional<Product> findById(int productId) {
         return productRepository.findById(productId);
+    }
+
+    public Iterable<Product> getProducts() {
+        return productRepository.findAll();
     }
 
     public HttpStatus addProduct(Product product) {

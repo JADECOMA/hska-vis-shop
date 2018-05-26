@@ -19,7 +19,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addCategory(@RequestBody Category category) {
+    public ResponseEntity<HttpStatus> addCategory(@RequestBody Category category) {
         log.info("\tURL-PATH: / | METHOD: PUT");
 
         HttpStatus status = categoryService.addCategory(category);
@@ -27,7 +27,7 @@ public class CategoryController {
     }
 
     @DeleteMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteCategory(@PathVariable int categoryId) {
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable int categoryId) {
         log.info("\tURL-PATH: /{categoryId} | METHOD: DELETE");
 
         HttpStatus status = categoryService.deleteCategory(categoryId);
@@ -38,5 +38,10 @@ public class CategoryController {
     public ResponseEntity<?> ok(@PathVariable String testIt) {
         log.info("\tURL-PATH: /test/{testIt} | METHOD: GET");
         return new ResponseEntity<>("{\"value\":\"" + testIt + "\"}", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Category>> getCategories() {
+        return new ResponseEntity<>(categoryService.getCategories(), HttpStatus.OK);
     }
 }
