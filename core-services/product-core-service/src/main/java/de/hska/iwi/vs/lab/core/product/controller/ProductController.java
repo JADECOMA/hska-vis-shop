@@ -20,28 +20,28 @@ public class ProductController {
 
     @GetMapping(value = "/search/{searchPhrase}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> searchProducts(@PathVariable String searchPhrase) {
-        log.info("URL-PATH: /search/{searchPhrase} | METHOD: GET");
+        log.info("\tURL-PATH: /search/{searchPhrase} | METHOD: GET");
 
         return new ResponseEntity<>(productService.searchProducts(searchPhrase), HttpStatus.OK);
     }
 
     @GetMapping(value = "/view/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findById(@PathVariable int productId) {
-        log.info("URL-PATH: /view/{productId} | METHOD: GET");
+        log.info("\tURL-PATH: /view/{productId} | METHOD: GET");
 
         return new ResponseEntity<>(productService.findById(productId), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteProduct(@PathVariable int productId) {
-        log.info("URL-PATH: /{productId} | METHOD: DELETE");
+        log.info("\tURL-PATH: /{productId} | METHOD: DELETE");
 
         return new ResponseEntity<>( productService.deleteProduct(productId));
     }
 
     @PutMapping()
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
-        log.info("URL-PATH: / | METHOD: PUT");
+        log.info("\tURL-PATH: / | METHOD: PUT");
 
         return new ResponseEntity<>(productService.addProduct(product));
     }

@@ -19,6 +19,7 @@ import org.springframework.util.StreamUtils;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
@@ -85,7 +86,7 @@ public class ProductControllerTest {
     public void givenProductWhenGetViewIdThenReturnJsonArray() throws Exception {
         Product product1 = product();
 
-        given(productService.findById(1)).willReturn(product1);
+        given(productService.findById(1)).willReturn(Optional.of(product1));
 
         mockMvc.perform(get("/view/{productId}", 1)
                 .contentType(MediaType.APPLICATION_JSON))

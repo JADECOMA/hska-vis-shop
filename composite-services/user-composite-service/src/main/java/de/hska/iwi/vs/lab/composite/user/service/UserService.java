@@ -17,7 +17,6 @@ public class UserService {
 
     private static Logger log = LoggerFactory.getLogger(UserService.class);
 
-//    @Autowired
     private final RestTemplate restTemplate;
 
     public UserService(RestTemplate rest) {
@@ -26,9 +25,6 @@ public class UserService {
 
     @HystrixCommand(fallbackMethod = "reliable")
     public ResponseEntity<User> findById(@PathVariable("userId") int userId) {
-        log.info("COMPOSITE findById | METHOD: GET");
-
-//        URI uri = URI.create("http://localhost:9090/api/customers/" + userId);
         URI uri = URI.create("http://customer-core-service:9010/" + userId);
 
         return new ResponseEntity<>(this.restTemplate.getForObject(uri, User.class), HttpStatus.OK);

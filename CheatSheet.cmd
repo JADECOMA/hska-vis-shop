@@ -45,6 +45,9 @@ docker stop customer-core-service mysql-customer-service eureka-server &
 docker rm customer-core-service mysql-customer-service eureka-server &
 docker run -p 8761:8761 --name eureka-server -d jadecoma/eureka-server
 docker run -p 3307:3306 --name mysql-customer-service -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=vis-shop-customer -e MYSQL_USER=demo_user -e MYSQL_PASSWORD=demo_pass -d mysql:5.6
+
+docker stop customer-core-service &
+docker rm customer-core-service &
 docker run -p 9010:9010 --name customer-core-service --link eureka-server --link mysql-customer-service:mysql -d jadecoma/customer-core-service
 
 docker stop user-composite-service &

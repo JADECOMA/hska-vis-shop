@@ -21,7 +21,7 @@ public class CustomerController {
 
     @PutMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
-        log.info("URL-PATH: / | METHOD: PUT");
+        log.info("\tURL-PATH: / | METHOD: PUT");
 
         HttpStatus status = customerService.addCustomer(customer);
         return new ResponseEntity<>(status);
@@ -29,28 +29,28 @@ public class CustomerController {
 
     @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listCustomer() {
-        log.info("URL-PATH: / | METHOD: GET");
+        log.info("\tURL-PATH: / | METHOD: GET");
 
         return new ResponseEntity<>(customerService.listCustomer(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody LoginData loginData) {
-        log.info("URL-PATH: /login | METHOD: POST");
+        log.info("\tURL-PATH: /login | METHOD: POST");
 
         return new ResponseEntity<>(customerService.login(loginData), HttpStatus.OK);
     }
 
     @GetMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> logout() {
-        log.info("URL-PATH: /logout | METHOD: GET");
+        log.info("\tURL-PATH: /logout | METHOD: GET");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findById(@PathVariable int customerId) {
-        log.info("URL-PATH: /{customerId} | METHOD: GET");
+        log.info("\tURL-PATH: /{customerId} | METHOD: GET");
 
         return new ResponseEntity<>(customerService.findById(customerId), HttpStatus.OK);
     }
