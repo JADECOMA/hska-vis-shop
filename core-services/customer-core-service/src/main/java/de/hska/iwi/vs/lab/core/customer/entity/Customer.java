@@ -55,10 +55,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer [name=" + this.name + "," +
-                " lastname=" + this.lastname + "," +
-                " password=" + this.password + "," +
-                " username=" + this.username + "," +
-                " role=" + this.role + "]";
+        return "{" +
+                "\"name\":\"" + this.name + "\"," +
+                "\"lastname\":\"" + this.lastname + "\"," +
+                "\"password\":\"" + this.password + "\"," +
+                "\"username\":\"" + this.username + "\"," +
+                "\"role\":\"" + this.role + "\"" +
+                "}";
     }
 }

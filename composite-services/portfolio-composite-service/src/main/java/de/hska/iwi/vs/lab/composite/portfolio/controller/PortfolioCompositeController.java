@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @RestController
 @EnableCircuitBreaker
 public class PortfolioCompositeController {
@@ -29,6 +31,7 @@ public class PortfolioCompositeController {
         return builder.build();
     }
 
+    /******************************************************************************************************************/
     @DeleteMapping(value = "/products/{productId}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int productId) {
         log.info("COMPOSITE URL-PATH: /{categoryId} | METHOD: DELETE");
@@ -43,7 +46,14 @@ public class PortfolioCompositeController {
         return portfolioService.addProduct(product);
     }
 
+    @GetMapping(value = "/products/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Category>> getProducts() {
+        log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
 
+        return portfolioService.getProducts();
+    }
+
+    /******************************************************************************************************************/
     @PutMapping(value = "/categories")
     public ResponseEntity<HttpStatus> addCategory(@RequestBody Category category) {
         log.info("COMPOSITE URL-PATH: / | METHOD: PUT");
@@ -58,24 +68,10 @@ public class PortfolioCompositeController {
         return portfolioService.deleteCategory(categoryId);
     }
 
-    @GetMapping(value = "/categories/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Category>> getCategories() {
+    @GetMapping(value = "/categories/get/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable int categoryId) {
         log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
 
-        return portfolioService.getCategories();
-    }
-
-    @GetMapping(value = "/products/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Category>> getProducts() {
-        log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
-
-        return portfolioService.getProducts();
-    }
-
-    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> genericGet() {
-        log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
-
-        return portfolioService.genericGet();
+        return portfolioService.getCategoryById(categoryId);
     }
 }

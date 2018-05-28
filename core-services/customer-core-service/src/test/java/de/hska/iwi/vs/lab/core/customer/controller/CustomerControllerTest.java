@@ -20,6 +20,7 @@ import org.springframework.util.StreamUtils;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
@@ -118,5 +119,21 @@ public class CustomerControllerTest {
         mockMvc.perform(put("/")).andExpect(status().isBadRequest());
         verify(customerService, never()).addCustomer(any(Customer.class));
         assertTrue(true);
+    }
+
+    @Test
+    public void whenGivenExistingCustomerIdReturnJson() throws Exception {
+        Customer customer = customer();
+
+        given(customerService.findById(1)).willReturn(Optional.of(customer));
+
+        mockMvc.perform(get("/{customerId}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(customer.getName())))
+                .andExpect(jsonPath("$.lastname", is(customer.getLastname())))
+                .andExpect(jsonPath("$.username", is(customer.getUsername())))
+                .andExpect(jsonPath("$.password", is(customer.getPassword())))
+                .andExpect(jsonPath("$.role", is(customer.getRole())));
     }
 }

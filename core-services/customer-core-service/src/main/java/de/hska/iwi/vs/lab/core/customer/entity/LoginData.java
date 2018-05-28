@@ -19,4 +19,12 @@ public class LoginData {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"username\":\"" + this.username + "\"," +
+                "\"password\":\"" + this.password+ "\"" +
+                "}";
+    }
 }

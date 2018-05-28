@@ -5,8 +5,8 @@ services:
     container_name: product-core-service
     depends_on:
       - eureka-server
-    ports:
-      - "9000:9000"
+#    ports:
+#      - "9000:9000"
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&
@@ -37,8 +37,8 @@ services:
     container_name: category-core-service
     depends_on:
       - eureka-server
-    ports:
-      - "9020:9020"
+#    ports:
+#      - "9020:9020"
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&
@@ -48,20 +48,20 @@ services:
       - mysql-category-service:mysql
 
 
-#  user-composite-service:
-#    image: jadecoma/user-composite-service
-#    container_name: user-composite-service
-#    depends_on:
-#      - eureka-server
-#    external_links:
-#      - customer-core-service
-#    command: >
-#      /bin/bash -c "
-#      nc -z eureka-server 8761 &&
-#      echo Connected to EUREKA and started!
-#      "
-#    ports:
-#      - "9100:9100"
+  user-composite-service:
+    image: jadecoma/user-composite-service
+    container_name: user-composite-service
+    depends_on:
+      - eureka-server
+    external_links:
+      - customer-core-service
+    command: >
+      /bin/bash -c "
+      nc -z eureka-server 8761 &&
+      echo Connected to EUREKA and started!
+      "
+    ports:
+      - "9100:9100"
 
 
   product-composite-service:
@@ -76,8 +76,8 @@ services:
       nc -z eureka-server 8761 &&
       echo Connected to EUREKA and started!
       "
-    ports:
-      - "9200:9200"
+#    ports:
+#      - "9200:9200"
 
 
   portfolio-composite-service:
@@ -93,8 +93,8 @@ services:
       nc -z eureka-server 8761 &&
       echo Connected to EUREKA and started!
       "
-    ports:
-      - "9300:9300"
+#    ports:
+#      - "9300:9300"
 
 
   db-products:

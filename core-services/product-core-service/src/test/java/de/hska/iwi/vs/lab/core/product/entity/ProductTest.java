@@ -89,10 +89,12 @@ public class ProductTest {
     @Test
     public void stringify() {
         Product product = product();
-        String output = "Product [name=Name," +
-                " details=Details," +
-                " price=41.11," +
-                " category_id=1]";
+        String output = "{" +
+                "\"name\":\"Name\"," +
+                "\"details\":\"Details\"," +
+                "\"price\":\"41.11\"," +
+                "\"category_id\":\"1\"" +
+                "}";
         assertThat(product.toString(), is(output));
     }
 }

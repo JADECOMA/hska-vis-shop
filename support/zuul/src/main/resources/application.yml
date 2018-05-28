@@ -29,9 +29,9 @@ zuul:
     products:
       path: /products/**
       url: http://product-composite-service:9200
-#    customers:
-#      path: /customers/**
-#      url: http://user-composite-service:9100
+    customers:
+      path: /customers/**
+      url: http://user-composite-service:9100
 spring:
   application:
     name: zuul-server

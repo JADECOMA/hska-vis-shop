@@ -83,6 +83,17 @@ public class ProductControllerTest {
     }
 
     @Test
+    public void givenNoProductWhenGetSearchSearchPhraseThenReturnNothing() throws Exception {
+        List<Product> list = mock(List.class);
+        given(list.isEmpty()).willReturn(true);
+        given(productService.searchProducts("test")).willReturn(list);
+
+        mockMvc.perform(get("/search/{searchPhrase}", "test")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
     public void givenProductWhenGetViewIdThenReturnJsonArray() throws Exception {
         Product product1 = product();
 
@@ -118,5 +129,40 @@ public class ProductControllerTest {
         mockMvc.perform(put("/")).andExpect(status().isBadRequest());
         verify(productService, never()).addProduct(any(Product.class));
         assertTrue(true);
+    }
+
+    @Test
+    public void whenGivenExistingCategoryIdThenReturnCategory() throws Exception {
+        Product product1 = product();
+        List<Product> allProducts = Arrays.asList(product1);
+
+        given(productService.findByCategoryId(1)).willReturn(allProducts);
+
+        mockMvc.perform(get("/byCategory/{productId}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name", is(product1.getName())));
+    }
+
+    @Test
+    public void returnAllProducts() throws Exception {
+        Product product1 = product();
+        Product product2 = product();
+
+        List<Product> allProducts = Arrays.asList(product1, product2);
+        given(productService.getProducts()).willReturn(allProducts);
+
+        mockMvc.perform(get("/get")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is(product1.getName())))
+                .andExpect(jsonPath("$[0].details", is(product1.getDetails())))
+                .andExpect(jsonPath("$[0].price", is(product1.getPrice())))
+                .andExpect(jsonPath("$[0].categoryId", is(product1.getCategoryId())))
+                .andExpect(jsonPath("$[1].name", is(product1.getName())))
+                .andExpect(jsonPath("$[1].details", is(product1.getDetails())))
+                .andExpect(jsonPath("$[1].price", is(product1.getPrice())))
+                .andExpect(jsonPath("$[1].categoryId", is(product1.getCategoryId())));
     }
 }

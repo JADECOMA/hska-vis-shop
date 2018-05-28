@@ -47,6 +47,10 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
+    public Iterable<Product> findByCategoryId (int categoryId) {
+     return productRepository.findByCategoryId(categoryId);
+    }
+
     public Iterable<Product> getProducts() {
         return productRepository.findAll();
     }

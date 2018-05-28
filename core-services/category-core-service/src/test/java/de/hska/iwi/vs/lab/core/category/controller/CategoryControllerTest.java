@@ -17,13 +17,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.StreamUtils;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -79,10 +82,32 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void test() throws Exception {
-        mockMvc.perform(get("/test/work")
+    public void whenGivenExistingCategoryIdReturnJson() throws Exception {
+        Category category = category();
+
+        given(categoryService.findCategoryById(1)).willReturn(Optional.of(category));
+
+        mockMvc.perform(get("/get/{categoryId}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .equals("work");
+                .andExpect(jsonPath("$.id", is(category.getId())))
+                .andExpect(jsonPath("$.name", is(category.getName())));
+    }
+
+    @Test
+    public void returnAllCategories() throws Exception {
+        Category category1 = category();
+        Category category2 = category();
+
+        List<Category> allProducts = Arrays.asList(category1, category2);
+        given(categoryService.getCategories()).willReturn(allProducts);
+
+        mockMvc.perform(get("/get")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(category1.getId())))
+                .andExpect(jsonPath("$[0].name", is(category1.getName())))
+                .andExpect(jsonPath("$[1].id", is(category2.getId())))
+                .andExpect(jsonPath("$[1].name", is(category2.getName())));
     }
 }

@@ -106,11 +106,13 @@ public class CustomerTest {
     @Test
     public void stringify() {
         Customer customer = customer();
-        String output = "Customer [name=Name," +
-                " lastname=LastName," +
-                " password=Password," +
-                " username=UserName," +
-                " role=1]";
+        String output = "{" +
+                "\"name\":\"Name\"," +
+                "\"lastname\":\"LastName\"," +
+                "\"password\":\"Password\"," +
+                "\"username\":\"UserName\"," +
+                "\"role\":\"1\"" +
+                "}";
         assertThat(customer.toString(), is(output));
     }
 }

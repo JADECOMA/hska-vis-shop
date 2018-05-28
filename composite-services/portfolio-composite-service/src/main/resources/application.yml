@@ -3,6 +3,7 @@ server:
 
 eureka:
   instance:
+    preferIpAddress: true
     leaseRenewalIntervalInSeconds: 5
   client:
     serviceUrl:
@@ -18,3 +19,7 @@ spring:
 management:
   security:
     enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

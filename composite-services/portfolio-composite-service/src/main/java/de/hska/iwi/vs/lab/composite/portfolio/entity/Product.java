@@ -41,9 +41,11 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [name=" + this.name + "," +
-                " details=" + this.details + "," +
-                " price=" + this.price + "," +
-                " category_id=" + this.categoryId + "]";
+        return "{" +
+                "\"name\":\"" + this.name + "\"," +
+                "\"details\":\"" + this.details + "\"," +
+                "\"price\":\"" + this.price + "\"," +
+                "\"categoryId\":\"" + this.categoryId + "\"" +
+                "}";
     }
 }

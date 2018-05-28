@@ -9,6 +9,12 @@ public class Category {
     private int id;
     private String name;
 
+    public int getId() { return id; }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -19,6 +25,9 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category [name=" + this.name + "]";
+        return "{" +
+                "\"id\":\"" + this.id + "\"," +
+                "\"name\":\"" + this.name + "\"" +
+                "}";
     }
 }

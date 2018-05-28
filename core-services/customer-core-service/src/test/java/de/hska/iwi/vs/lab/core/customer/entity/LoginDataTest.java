@@ -53,4 +53,13 @@ public class LoginDataTest {
         loginData.setPassword(userName);
         assertThat(loginData().getUsername(), is(userName));
     }
+
+    @Test
+    public void stringify() {
+        assertThat(loginData().toString(), is(
+                "{" +
+                        "\"username\":\"Name\"," +
+                        "\"password\":\"Password\"" +
+                        "}"));
+    }
 }

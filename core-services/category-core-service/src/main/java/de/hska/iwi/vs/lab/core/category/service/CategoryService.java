@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Service
@@ -38,6 +39,9 @@ public class CategoryService {
                 .test(category);
     }
 
+    public Optional<Category> findCategoryById(int categoryId) {
+        return categoryRepository.findById(categoryId);
+    }
 
     private Predicate<Category> filterName() {
         return category -> category.getName().length() > 0;

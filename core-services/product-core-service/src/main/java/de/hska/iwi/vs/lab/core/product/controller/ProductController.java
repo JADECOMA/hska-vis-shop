@@ -47,6 +47,13 @@ public class ProductController {
         return new ResponseEntity<>( productService.deleteProduct(productId));
     }
 
+    @GetMapping(value = "/byCategory/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Product>> findByCategoryId(@PathVariable int categoryId) {
+        log.info("\tURL-PATH: /view/{productId} | METHOD: GET");
+
+        return new ResponseEntity<>(productService.findByCategoryId(categoryId), HttpStatus.OK);
+    }
+
     @PutMapping()
     public ResponseEntity<HttpStatus> addProduct(@RequestBody Product product) {
         log.info("\tURL-PATH: / | METHOD: PUT");

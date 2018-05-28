@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class CategoryController {
 
@@ -34,10 +36,11 @@ public class CategoryController {
         return new ResponseEntity<>(status);
     }
 
-    @GetMapping(value = "/test/{testIt}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> ok(@PathVariable String testIt) {
-        log.info("\tURL-PATH: /test/{testIt} | METHOD: GET");
-        return new ResponseEntity<>("{\"value\":\"" + testIt + "\"}", HttpStatus.OK);
+    @GetMapping(value = "/get/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable int categoryId) {
+        log.info("\tURL-PATH: /{categoryId} | METHOD: GET");
+
+        return new ResponseEntity<>(categoryService.findCategoryById(categoryId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
