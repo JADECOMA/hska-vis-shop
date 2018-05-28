@@ -14,15 +14,6 @@ zuul:
 #  ignoredServices: '*'
 
   routes:
-#    products:
-#      path: /products/**
-#      url: http://product-core-service:9000
-#    customers:
-#      path: /customers/**
-#      url: http://customer-core-service:9010
-#    categories:
-#      path: /categories/**
-#      url: http://category-core-service:9020
     portfolio:
       path: /portfolio/**
       url: http://portfolio-composite-service:9300
