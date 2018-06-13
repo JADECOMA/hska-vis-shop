@@ -10,4 +10,4 @@ CREATE TABLE customer (
 
 insert into `customer` (`name`, `lastname`, `password`, `username`, `role`) values('admin', 'admin', 'admin', 'admin', 1);
 insert into `customer` (`name`, `lastname`, `password`, `username`, `role`) values('Manuel', 'Härtle', '123456', 'jadecoma', 0);
-insert into `customer` (`name`, `lastname`, `password`, `username`, `role`) values('Fritz', 'Müller', '123456', 'jadecoma', 0);
+insert into `customer` (`name`, `lastname`, `password`, `username`, `role`) values('Fritz', 'Müller', '123456', 'SuperFritz', 0);

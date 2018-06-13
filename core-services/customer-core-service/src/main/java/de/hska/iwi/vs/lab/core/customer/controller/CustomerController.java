@@ -21,7 +21,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PutMapping(value="/",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> addCustomer(@RequestBody Customer customer) {
         log.info("\tURL-PATH: / | METHOD: PUT");
 
@@ -29,7 +29,7 @@ public class CustomerController {
         return new ResponseEntity<>(status);
     }
 
-    @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Customer>> listCustomer() {
         log.info("\tURL-PATH: / | METHOD: GET");
 
@@ -55,5 +55,13 @@ public class CustomerController {
         log.info("\tURL-PATH: /{customerId} | METHOD: GET");
 
         return new ResponseEntity<>(customerService.findById(customerId), HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/checkLogin/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Customer>> findByUserName(@PathVariable String userName) {
+        log.info("\tURL-PATH: /checkLogin/{userName} | METHOD: GET");
+
+        return new ResponseEntity<>(customerService.findByUsername(userName), HttpStatus.OK);
     }
 }

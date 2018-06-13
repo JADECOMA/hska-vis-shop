@@ -35,4 +35,11 @@ public class UserCompositeController {
 
         return userService.findById(userId);
     }
+
+    @GetMapping(value = "/checkLogin/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> findByUserName(@PathVariable("userName") String userName) {
+        log.info("COMPOSITE URL-PATH: /checkLogin/{userName} | METHOD: GET");
+
+        return userService.findByUsername(userName);
+    }
 }

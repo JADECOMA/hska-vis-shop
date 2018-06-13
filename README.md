@@ -2,6 +2,10 @@
 
 This is a backend for an shop based on microservices used at Hochschule Karlsruhe in lesson "Verteilte Informations Systeme" for the masters degree.
 
+## Architecture
+![System-Architecture](http://www.jadecoma.de/architecture.png "System-Architecture")
+
+
 ## Getting Started
 
 First of all clone the repository. Then build the docker dependencies and start docker-compose.
@@ -59,16 +63,16 @@ To test the services you can setup REST-calls. These are:
 
 |Request-Methode| URL                                	        | Meaning                                      	 |
 |---|---|---|
-|GET|http://localhost:9090/api/customers/{userId}| show a user |
-|GET|http://localhost:9090/api/products/search/{searchPhrase}| search for a product with a search-phrase|
-|GET|http://localhost:9090/api/products/view/{productId}| search for a product by id |
-|PUT|http://localhost:9090/api/portfolio/products| creates a product if the category exists |
-|DELETE|http://localhost:9090/api/portfolio/products/{productId}| delete a product |
-|PUT|http://localhost:9090/api/portfolio/categories| creates a category |
-|DELETE|http://localhost:9090/api/portfolio/categories/{categoryId}| deletes a category if it doesn't appear in a product |
-|GET|http://localhost:9090/api/portfolio/categories/get| ONLY FOR TESTING shows all categories |
-|GET|http://localhost:9090/api/portfolio/products/get| ONLY FOR TESTING shows all products |
-|GET|http://localhost:8010/hystrix| show hystrix dashboard. There you need to enter e.g. http://localhost:9090/api/portfolio/actuator/hystrix.stream |
+|GET|<a href="http://localhost:9090/api/customers/1">http://localhost:9090/api/customers/{userId}</a>| show a user |
+|GET|<a href="http://localhost:9090/api/products/search/Name">http://localhost:9090/api/products/search/{searchPhrase}</a>| search for a product with a search-phrase|
+|GET|<a href="http://localhost:9090/api/products/view/1">http://localhost:9090/api/products/view/{productId}</a>| search for a product by id |
+|PUT|<a href="http://localhost:9090/api/portfolio/products">http://localhost:9090/api/portfolio/products</a>| creates a product if the category exists |
+|DELETE|<a href="http://localhost:9090/api/portfolio/products/1">http://localhost:9090/api/portfolio/products/{productId}</a>| delete a product |
+|PUT|<a href="http://localhost:9090/api/portfolio/categories">http://localhost:9090/api/portfolio/categories</a>| creates a category |
+|DELETE|<a href="http://localhost:9090/api/portfolio/categories/1">http://localhost:9090/api/portfolio/categories/{categoryId}</a>| deletes a category if it doesn't appear in a product |
+|GET|<a href="http://localhost:9090/api/portfolio/categories/get">http://localhost:9090/api/portfolio/categories/get</a>| ONLY FOR TESTING shows all categories |
+|GET|<a href="http://localhost:9090/api/portfolio/products/get">http://localhost:9090/api/portfolio/products/get</a>| ONLY FOR TESTING shows all products |
+|GET|<a href="http://localhost:8010/hystrix">http://localhost:8010/hystrix</a>| show hystrix dashboard. There you need to enter e.g. http://localhost:9090/api/portfolio/actuator/hystrix.stream |
 
  
  

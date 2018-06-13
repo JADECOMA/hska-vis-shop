@@ -41,4 +41,23 @@ public class UserService {
         user.setRole(1);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @HystrixCommand(fallbackMethod = "findByUsernameFallback")
+    public ResponseEntity<User> findByUsername(@PathVariable("userName") String userName) {
+        URI uri = URI.create("http://customer-core-service:9010/checkLogin/" + userName);
+
+        return new ResponseEntity<>(this.restTemplate.getForObject(uri, User.class), HttpStatus.OK);
+    }
+
+    public ResponseEntity<User> findByUsernameFallback(@PathVariable("userName") String userName) {
+        log.info("COMPOSITE findByUsernameFallback | METHOD: GET");
+
+        User user = new User();
+        user.setName("Name");
+        user.setLastname("LastName");
+        user.setPassword("***SECRET***");
+        user.setUsername("Super-User");
+        user.setRole(1);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }

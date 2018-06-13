@@ -36,9 +36,9 @@ public class CustomerService {
     public HttpStatus login(LoginData loginData) {
         Objects.requireNonNull(loginData, "loginData data cannot be empty.");
 
-        Customer customer = customerRepository.findByUsernameIgnoreCase(loginData.getUsername());
+        Optional<Customer> customer = customerRepository.findByUsernameIgnoreCase(loginData.getUsername());
 
-        if (customer.getPassword().equals(loginData.getPassword())) {
+        if (customer.get().getPassword().equals(loginData.getPassword())) {
             return HttpStatus.OK;
         } else {
             return HttpStatus.FORBIDDEN;
@@ -51,6 +51,10 @@ public class CustomerService {
 
     public Optional<Customer> findById(int customerId) {
         return customerRepository.findById(customerId);
+    }
+
+    public Optional<Customer> findByUsername(String userName) {
+        return customerRepository.findByUsernameIgnoreCase(userName);
     }
 
     private boolean validate(Customer customer) {
