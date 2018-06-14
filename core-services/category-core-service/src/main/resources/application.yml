@@ -4,15 +4,9 @@ server:
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5
-#    leaseRenewalIntervalInSeconds: 1
-#    leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
       defaultZone: ${eureka_url:http://eureka-server:8761/eureka/}
-#    healthcheck:
-#      enabled: true
-#    lease:
-#      duration: 5
 
 spring:
   application:
