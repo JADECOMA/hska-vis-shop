@@ -1,7 +1,6 @@
 package de.hska.iwi.vs.lab.core.customer.controller;
 
 import de.hska.iwi.vs.lab.core.customer.entity.Customer;
-import de.hska.iwi.vs.lab.core.customer.entity.LoginData;
 import de.hska.iwi.vs.lab.core.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,20 +26,6 @@ public class CustomerController {
 
         HttpStatus status = customerService.addCustomer(customer);
         return new ResponseEntity<>(status);
-    }
-
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Customer>> listCustomer() {
-        log.info("\tURL-PATH: / | METHOD: GET");
-
-        return new ResponseEntity<>(customerService.listCustomer(), HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> login(@RequestBody LoginData loginData) {
-        log.info("\tURL-PATH: /login | METHOD: POST");
-
-        return new ResponseEntity<>(customerService.login(loginData), HttpStatus.OK);
     }
 
     @GetMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_VALUE)

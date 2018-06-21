@@ -3,26 +3,74 @@ package de.hska.iwi.vs.lab.core.customer.entity;
 import javax.persistence.*;
 
 @Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private String lastname;
-    private String password;
-    private String username;
-    private int role;
+@Table(name = "customer")
+public class Customer implements java.io.Serializable {
 
-    public String getName() {
-        return name;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private int id;
+
+
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
+
+
+    @Column(name = "name", nullable = false)
+    private String firstname;
+
+
+    @Column(name = "lastname", nullable = false)
+    private String lastname;
+
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @ManyToOne()
+    @JoinColumn(name = "role", nullable = false)
+    private Role role;
+
+    public Customer() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Customer(String username, String firstname, String lastname,
+                String password, Role role) {
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.role = role;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstname() {
+        return this.firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
-        return lastname;
+        return this.lastname;
     }
 
     public void setLastname(String lastname) {
@@ -30,37 +78,29 @@ public class Customer {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public Role getRole() {
+        return this.role;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "\"name\":\"" + this.name + "\"," +
+                "\"name\":\"" + this.firstname + "\"," +
                 "\"lastname\":\"" + this.lastname + "\"," +
                 "\"password\":\"" + this.password + "\"," +
                 "\"username\":\"" + this.username + "\"," +
-                "\"role\":\"" + this.role + "\"" +
+                "\"role\":\"" + this.role.getId() + "\"" +
                 "}";
     }
 }

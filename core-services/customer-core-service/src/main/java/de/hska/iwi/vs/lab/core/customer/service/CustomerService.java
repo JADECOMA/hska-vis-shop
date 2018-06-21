@@ -1,13 +1,11 @@
 package de.hska.iwi.vs.lab.core.customer.service;
 
 import de.hska.iwi.vs.lab.core.customer.entity.Customer;
-import de.hska.iwi.vs.lab.core.customer.entity.LoginData;
 import de.hska.iwi.vs.lab.core.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -19,34 +17,19 @@ public class CustomerService {
 
     public HttpStatus addCustomer(Customer customer) {
         if (validate(customer)) {
+
             Customer newCustomer = new Customer();
-            newCustomer.setName(customer.getName());
+            newCustomer.setFirstname(customer.getFirstname());
             newCustomer.setLastname(customer.getLastname());
             newCustomer.setPassword(customer.getPassword());
             newCustomer.setUsername(customer.getUsername());
-            newCustomer.setRole(1);
+            newCustomer.setRole(customer.getRole());
             customerRepository.save(newCustomer);
 
             return HttpStatus.CREATED;
         } else {
             return HttpStatus.BAD_REQUEST;
         }
-    }
-
-    public HttpStatus login(LoginData loginData) {
-        Objects.requireNonNull(loginData, "loginData data cannot be empty.");
-
-        Optional<Customer> customer = customerRepository.findByUsernameIgnoreCase(loginData.getUsername());
-
-        if (customer.get().getPassword().equals(loginData.getPassword())) {
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.FORBIDDEN;
-        }
-    }
-
-    public Iterable<Customer> listCustomer() {
-        return customerRepository.findAll();
     }
 
     public Optional<Customer> findById(int customerId) {
@@ -67,7 +50,7 @@ public class CustomerService {
 
 
     private Predicate<Customer> filterName() {
-        return customer -> customer.getName().length() > 0;
+        return customer -> customer.getFirstname().length() > 0;
     }
 
     private Predicate<Customer> filterLastName() {
