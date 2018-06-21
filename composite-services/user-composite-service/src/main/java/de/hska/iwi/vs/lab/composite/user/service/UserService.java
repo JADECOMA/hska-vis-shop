@@ -1,13 +1,14 @@
 package de.hska.iwi.vs.lab.composite.user.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import de.hska.iwi.vs.lab.composite.user.entity.User;
+import de.hska.iwi.vs.lab.composite.user.entity.Customer;
+import de.hska.iwi.vs.lab.composite.user.entity.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -24,40 +25,52 @@ public class UserService {
     }
 
     @HystrixCommand(fallbackMethod = "reliable")
-    public ResponseEntity<User> findById(@PathVariable("userId") int userId) {
+    public ResponseEntity<Customer> findById(@PathVariable("userId") int userId) {
         URI uri = URI.create("http://customer-core-service:9010/" + userId);
 
-        return new ResponseEntity<>(this.restTemplate.getForObject(uri, User.class), HttpStatus.OK);
+        return new ResponseEntity<>(this.restTemplate.getForObject(uri, Customer.class), HttpStatus.OK);
     }
 
-    public ResponseEntity<User> reliable(@PathVariable("userId") int userId) {
+    public ResponseEntity<Customer> reliable(@PathVariable("userId") int userId) {
         log.info("COMPOSITE reliable | METHOD: GET");
 
-        User user = new User();
-        user.setName("Name");
-        user.setLastname("LastName");
-        user.setPassword("***SECRET***");
-        user.setUsername("Super-User");
-        user.setRole(1);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        Customer customer = new Customer();
+        customer.setFirstname("Name");
+        customer.setLastname("LastName");
+        customer.setPassword("***SECRET***");
+        customer.setUsername("Super-User");
+        customer.setRole(new Role("user", 1));
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @HystrixCommand(fallbackMethod = "findByUsernameFallback")
-    public ResponseEntity<User> findByUsername(@PathVariable("userName") String userName) {
+    public ResponseEntity<Customer> findByUsername(@PathVariable("userName") String userName) {
         URI uri = URI.create("http://customer-core-service:9010/checkLogin/" + userName);
 
-        return new ResponseEntity<>(this.restTemplate.getForObject(uri, User.class), HttpStatus.OK);
+        return new ResponseEntity<>(this.restTemplate.getForObject(uri, Customer.class), HttpStatus.OK);
     }
 
-    public ResponseEntity<User> findByUsernameFallback(@PathVariable("userName") String userName) {
+    public ResponseEntity<Customer> findByUsernameFallback(@PathVariable("userName") String userName) {
         log.info("COMPOSITE findByUsernameFallback | METHOD: GET");
 
-        User user = new User();
-        user.setName("Name");
-        user.setLastname("LastName");
-        user.setPassword("***SECRET***");
-        user.setUsername("Super-User");
-        user.setRole(1);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        Customer customer = new Customer();
+        customer.setFirstname("Name");
+        customer.setLastname("LastName");
+        customer.setPassword("***SECRET***");
+        customer.setUsername("Super-User");
+        customer.setRole(new Role("user", 1));
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
+        String requestJson = customer.toString();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+        restTemplate.put("http://customer-core-service:9010/", customer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
