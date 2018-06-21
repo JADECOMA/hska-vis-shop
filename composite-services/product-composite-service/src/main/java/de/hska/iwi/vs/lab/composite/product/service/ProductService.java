@@ -1,6 +1,7 @@
 package de.hska.iwi.vs.lab.composite.product.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import de.hska.iwi.vs.lab.composite.product.entity.Category;
 import de.hska.iwi.vs.lab.composite.product.entity.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class ProductService {
         product.setName("No Products available for searchPhrase " + searchPhrase);
         product.setDetails("No details available");
         product.setPrice(0.00);
-        product.setCategoryId(0);
+        product.setCategory(new Category("dummy"));
         List<Product> list = Arrays.asList(product);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -61,7 +62,7 @@ public class ProductService {
         product.setName("No Products available for id " + productId);
         product.setDetails("No details available");
         product.setPrice(0.00);
-        product.setCategoryId(0);
+        product.setCategory(new Category("dummy"));
         return new ResponseEntity<>(Optional.of(product), HttpStatus.OK);
     }
 }
