@@ -9,13 +9,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>auth</module>
         <module>core-services</module>
         <module>composite-services</module>
         <module>support/zuul</module>
         <module>support/eureka-server</module>
-        <!--<module>support/hystrix</module>-->
-        <!--<module>support/hystrix-dashboard</module>-->
-        <!--<module>support/ribbon</module>-->
     </modules>
 
 </project>

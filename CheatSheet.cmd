@@ -22,6 +22,7 @@ docker run -p 9000:8080 --name category-core-service --link mysql-category-servi
 
 
 docker exec -it mysql-category-service mysql -u demo_user -p
+docker exec -it mysql-customer-service mysql -u demo_user -p
 
 docker system prune
 docker rmi jadecoma/eureka-server jadecoma/customer-core-service jadecoma/product-core-service mysql dadarek/wait-for-dependencies

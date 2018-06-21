@@ -1,36 +1,5 @@
 version: '3'
 services:
-  oauth-server:
-    image: jadecoma/oauth-server
-    container_name: oauth-server
-    ports:
-      - "8081:8081"
-    external_links:
-      - db-oauth:mysql
-#
-#  client:
-#    image: jadecoma/client
-#    container_name: client
-#    ports:
-#      - "8080:8080"
-#    external_links:
-#      - oauth-server
-#      #- resource-server
-#    links:
-#      - oauth-server
-#      #- resource-server
-
-#  resource-server:
-#    image: jadecoma/resource-server
-#    container_name: resource-server
-#    ports:
-#      - "8082:8082"
-#    external_links:
-#      - oauth-server
-#    links:
-#      - oauth-server
-
-
   product-core-service:
     image: jadecoma/product-core-service
     container_name: product-core-service
@@ -43,7 +12,6 @@ services:
       "
     external_links:
       - mysql-product-service:mysql
-#      - oauth-server
 
 
   customer-core-service:
@@ -51,6 +19,8 @@ services:
     container_name: customer-core-service
     depends_on:
       - eureka-server
+    ports:
+      - "9010:9010"
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&
@@ -94,11 +64,6 @@ services:
       - eureka-server
     external_links:
       - product-core-service
-    #  - oauth-server
-    #links:
-    #  - oauth-server
-    #ports:
-    #  - "9200:9200"
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&
@@ -152,15 +117,6 @@ services:
       MYSQL_PASSWORD: demo_pass
 
 
-  db-oauth:
-    image: mysql:5.6
-    container_name: mysql-oauth-service
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: vis-shop-oauth
-      MYSQL_USER: demo_user
-      MYSQL_PASSWORD: demo_pass
-
 
   web-shop-db-image:
     image: mavogel/hska-vis-web-shop-db-image
@@ -181,13 +137,11 @@ services:
       - zuul
       - product-composite-service
       - product-core-service
-      - oauth-server
     links:
       - web-shop-db-image
       - zuul
       - product-composite-service
       - product-core-service
-      - oauth-server
     ports:
       - "8888:8080"
 
@@ -204,10 +158,6 @@ services:
     container_name: zuul
     depends_on:
       - eureka-server
-    external_links:
-      - oauth-server
-    links:
-      - oauth-server
     ports:
       - "9090:9090"
 

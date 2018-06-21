@@ -23,6 +23,11 @@ zuul:
     customers:
       path: /customers/**
       url: http://user-composite-service:9100
+    uaa:
+      path: /login/**
+      sensitiveHeaders:
+      serviceId: oauth-server
+
 spring:
   application:
     name: zuul-server
@@ -30,3 +35,8 @@ spring:
 management:
   security:
     enabled: false
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://oauth-server:8081/auth/user
