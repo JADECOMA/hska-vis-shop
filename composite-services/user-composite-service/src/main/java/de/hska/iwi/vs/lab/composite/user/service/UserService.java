@@ -62,15 +62,20 @@ public class UserService {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
-        String requestJson = customer.toString();
-
+    @HystrixCommand(fallbackMethod = "addCustomerFallback")
+    public ResponseEntity<Customer> addCustomer(@RequestBody String customer) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+        HttpEntity<String> entity = new HttpEntity<>(customer, headers);
         restTemplate.put("http://customer-core-service:9010/", customer);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Customer> addCustomerFallback(@RequestBody String customer) {
+        log.info("\t\tCOMPOSITE addCustomerFallback | METHOD: PUT");
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

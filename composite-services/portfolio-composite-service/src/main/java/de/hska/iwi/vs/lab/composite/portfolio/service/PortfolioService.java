@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.Optional;
+import java.util.List;
 
 @Component
 public class PortfolioService {
@@ -43,28 +43,17 @@ public class PortfolioService {
 
     /******************************************************************************************************************/
     @HystrixCommand(fallbackMethod = "addProductFallback")
-    public ResponseEntity<HttpStatus> addProduct(@RequestBody Product product) {
-        URI uri = URI.create("http://category-core-service:9020/get/" + product.getCategoryId());
+    public ResponseEntity<HttpStatus> addProduct(@RequestBody String product) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        Category category = (this.restTemplate.getForObject(uri, Category.class));
+        HttpEntity<String> entity = new HttpEntity<>(product, headers);
+        restTemplate.put("http://product-core-service:9000/", entity);
 
-        if (category.getId() == product.getCategoryId()) {
-            String requestJson = product.toString();
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
-            restTemplate.put("http://product-core-service:9000/", entity);
-
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            log.info("CategoryIds are different");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> addProductFallback(@RequestBody Product product) {
+    public ResponseEntity<HttpStatus> addProductFallback(@RequestBody String product) {
         log.info("\t\tCOMPOSITE addProductFallback | METHOD: PUT");
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,19 +61,17 @@ public class PortfolioService {
 
     /******************************************************************************************************************/
     @HystrixCommand(fallbackMethod = "addCategoryFallback")
-    public ResponseEntity<HttpStatus> addCategory(@RequestBody Category category) {
-        String requestJson = category.toString();
-
+    public ResponseEntity<HttpStatus> addCategory(@RequestBody String category) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+        HttpEntity<String> entity = new HttpEntity<>(category, headers);
         restTemplate.put("http://category-core-service:9020/", entity);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> addCategoryFallback(@RequestBody Category category) {
+    public ResponseEntity<HttpStatus> addCategoryFallback(@RequestBody String category) {
         log.info("\t\tCOMPOSITE addCategoryFallback | METHOD: PUT");
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -115,29 +102,15 @@ public class PortfolioService {
     }
 
     /******************************************************************************************************************/
-    @HystrixCommand(fallbackMethod = "getCategoryByIdFallback")
-    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable int categoryId) {
-        URI uri = URI.create("http://category-core-service:9020/get/" + categoryId);
+    @HystrixCommand(fallbackMethod = "getCategoriesFallback")
+    public ResponseEntity<List<Category>> getCategories() {
+        URI uri = URI.create("http://category-core-service:9020/get/");
 
-        return new ResponseEntity<>(restTemplate.getForObject(uri, Optional.class), HttpStatus.OK);
+        return new ResponseEntity<>(restTemplate.getForObject(uri, List.class), HttpStatus.OK);
     }
 
-    public ResponseEntity<Optional<Category>> getCategoryByIdFallback(@PathVariable int categoryId) {
-        log.info("\t\tCOMPOSITE getCategoryByIdFallback | METHOD: GET");
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    /******************************************************************************************************************/
-    @HystrixCommand(fallbackMethod = "getProductsFallback")
-    public ResponseEntity<Iterable<Category>> getProducts() {
-        URI uri = URI.create("http://product-core-service:9000/get");
-
-        return new ResponseEntity<>(restTemplate.getForObject(uri, Iterable.class), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Iterable<Category>> getProductsFallback() {
-        log.info("\t\tCOMPOSITE getProductsFallback | METHOD: GET");
+    public ResponseEntity<List<Category>> getCategoriesFallback() {
+        log.info("\t\tCOMPOSITE getCategoriesFallback | METHOD: GET");
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

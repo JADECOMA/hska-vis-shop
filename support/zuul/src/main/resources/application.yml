@@ -23,10 +23,10 @@ zuul:
     customers:
       path: /customers/**
       url: http://user-composite-service:9100
-    uaa:
-      path: /login/**
-      sensitiveHeaders:
-      serviceId: oauth-server
+#    uaa:
+#      path: /login/**
+#      sensitiveHeaders:
+#      serviceId: oauth-server
 
 spring:
   application:

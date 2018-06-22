@@ -7,29 +7,6 @@ services:
       - "8081:8081"
     external_links:
       - db-oauth:mysql
-#
-#  client:
-#    image: jadecoma/client
-#    container_name: client
-#    ports:
-#      - "8080:8080"
-#    external_links:
-#      - oauth-server
-#      #- resource-server
-#    links:
-#      - oauth-server
-#      #- resource-server
-
-#  resource-server:
-#    image: jadecoma/resource-server
-#    container_name: resource-server
-#    ports:
-#      - "8082:8082"
-#    external_links:
-#      - oauth-server
-#    links:
-#      - oauth-server
-
 
   product-core-service:
     image: jadecoma/product-core-service
@@ -43,7 +20,6 @@ services:
       "
     external_links:
       - mysql-product-service:mysql
-#      - oauth-server
 
 
   customer-core-service:
@@ -94,11 +70,6 @@ services:
       - eureka-server
     external_links:
       - product-core-service
-    #  - oauth-server
-    #links:
-    #  - oauth-server
-    #ports:
-    #  - "9200:9200"
     command: >
       /bin/bash -c "
       nc -z eureka-server 8761 &&

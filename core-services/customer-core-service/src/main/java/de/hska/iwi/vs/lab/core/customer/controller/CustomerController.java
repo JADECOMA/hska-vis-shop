@@ -20,12 +20,13 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PutMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> addCustomer(@RequestBody Customer customer) {
+    @PutMapping(value = "/")
+    public ResponseEntity<HttpStatus> addCustomer(@RequestBody String customer) {
         log.info("\tURL-PATH: / | METHOD: PUT");
 
-        HttpStatus status = customerService.addCustomer(customer);
-        return new ResponseEntity<>(status);
+        log.info(customer);
+
+        return new ResponseEntity<>(customerService.addCustomer(customer));
     }
 
     @GetMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_VALUE)

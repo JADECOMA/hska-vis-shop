@@ -2,6 +2,7 @@ package de.hska.iwi.vs.lab.core.product.service;
 
 import de.hska.iwi.vs.lab.core.product.entity.Product;
 import de.hska.iwi.vs.lab.core.product.repository.ProductRepository;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +22,28 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> searchProducts(String searchPhrase) {
-        double price = 0.0;
-        double minPrice = 0.0;
-        double maxPrice = 0.0;
-        int category_id = 0;
+        String[] split = searchPhrase.split("&");
+        String searchText = split[0];
+        double minPrice;
+        double maxPrice;
 
-//        try {
-//            price = Double.parseDouble(searchPhrase);
-//            minPrice = price - 0.5;
-//            maxPrice = price + 0.5;
-//        } catch (Exception e) {
-//            log.info("\t\t\tCATCH price");
-//        }
-//
-//        try {
-//            category_id = Integer.parseInt(searchPhrase);
-//        } catch (Exception e) {
-//            log.info("\t\t\tCATCH category_id");
-//        }
+        if (split[1].equals("*")) {
+            minPrice = 0.0;
+        } else {
+            minPrice = Double.parseDouble(split[1]);
+        }
 
-        return productRepository.findDistinctProductByNameContainingOrDetailsContainingOrPriceBetweenOrCategoryIdAllIgnoreCase(searchPhrase, searchPhrase, minPrice, maxPrice, category_id);
+        if (split[2].equals("*")) {
+            maxPrice = Double.MAX_VALUE;
+        } else {
+            maxPrice = Double.parseDouble(split[2]);
+        }
+
+        return productRepository.findProductByNameContainingAndPriceBetweenAllIgnoreCase(
+                searchText,
+                minPrice,
+                maxPrice
+        );
     }
 
     public Optional<Product> findById(int productId) {
@@ -51,19 +54,21 @@ public class ProductService {
      return productRepository.findByCategoryId(categoryId);
     }
 
-    public Iterable<Product> getProducts() {
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-    public HttpStatus addProduct(Product product) {
-        product.toString();
+    public HttpStatus addProduct(String productString) {
+        JSONObject json = new JSONObject(productString);
+
+        Product product = new Product();
+        product.setName(json.getString("name"));
+        product.setDetails(json.getString("details"));
+        product.setPrice(json.getDouble("price"));
+        product.setCategoryId(json.getInt("categoryId"));
+
         if (validate(product)) {
-            Product newProduct = new Product();
-            newProduct.setName(product.getName());
-            newProduct.setDetails(product.getDetails());
-            newProduct.setPrice(product.getPrice());
-            newProduct.setCategoryId(product.getCategoryId());
-            productRepository.save(newProduct);
+            productRepository.save(product);
 
             return HttpStatus.CREATED;
         } else {

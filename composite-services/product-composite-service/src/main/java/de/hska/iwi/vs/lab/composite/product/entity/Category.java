@@ -1,12 +1,8 @@
 package de.hska.iwi.vs.lab.composite.product.entity;
 
-public class Category implements java.io.Serializable {
+public class Category {
 	private int id;
 	private String name;
-
-	public Category(String name) {
-		this.name = name;
-	}
 
 	public int getId() {
 		return this.id;
@@ -22,5 +18,13 @@ public class Category implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+				"\"id\":\"" + this.id + "\"," +
+				"\"name\":\"" + this.name + "\"" +
+				"}";
 	}
 }

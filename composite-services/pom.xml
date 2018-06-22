@@ -81,6 +81,12 @@
             <artifactId>spring-cloud-starter-ribbon</artifactId>
             <version>1.4.4.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

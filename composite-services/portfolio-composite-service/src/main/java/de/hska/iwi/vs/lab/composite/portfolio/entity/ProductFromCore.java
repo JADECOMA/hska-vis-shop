@@ -1,12 +1,12 @@
 package de.hska.iwi.vs.lab.composite.portfolio.entity;
 
-public class Product {
+public class ProductFromCore implements java.io.Serializable {
 
     private int id;
     private String details;
-    private double price;
     private String name;
-    private Category category;
+    private double price;
+    private int categoryId;
 
     public int getId() {
         return id;
@@ -24,14 +24,6 @@ public class Product {
         this.details = details;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getName() {
         return name;
     }
@@ -40,12 +32,20 @@ public class Product {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
@@ -55,10 +55,7 @@ public class Product {
                 "\"name\":\"" + this.name + "\"," +
                 "\"details\":\"" + this.details + "\"," +
                 "\"price\":\"" + this.price + "\"," +
-                "\"category\": {" +
-                    "\"id\":" + this.category.getId() + "\"," +
-                    "\"name\":" + this.category.getName() + "\"" +
-                    "}" +
+                "\"categoryId\":\"" + this.categoryId + "\"" +
                 "}";
     }
 }

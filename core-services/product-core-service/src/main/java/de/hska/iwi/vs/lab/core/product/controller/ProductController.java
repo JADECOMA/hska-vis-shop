@@ -55,14 +55,14 @@ public class ProductController {
     }
 
     @PutMapping()
-    public ResponseEntity<HttpStatus> addProduct(@RequestBody Product product) {
+    public ResponseEntity<HttpStatus> addProduct(@RequestBody String product) {
         log.info("\tURL-PATH: / | METHOD: PUT");
 
         return new ResponseEntity<>(productService.addProduct(product));
     }
 
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Product>> getProducts() {
+    public ResponseEntity<List<Product>> getProducts() {
         log.info("\tURL-PATH: /get | METHOD: GET");
 
         return new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);

@@ -13,6 +13,14 @@ public class Product {
     @Column(name="category_id")
     private int categoryId;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getDetails() {
         return details;
     }
@@ -48,6 +56,7 @@ public class Product {
     @Override
     public String toString() {
         return "{" +
+                "\"id\":\"" + this.id + "\"," +
                 "\"name\":\"" + this.name + "\"," +
                 "\"details\":\"" + this.details + "\"," +
                 "\"price\":\"" + this.price + "\"," +

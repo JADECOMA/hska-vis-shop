@@ -1,7 +1,6 @@
 package de.hska.iwi.vs.lab.composite.portfolio.controller;
 
 import de.hska.iwi.vs.lab.composite.portfolio.entity.Category;
-import de.hska.iwi.vs.lab.composite.portfolio.entity.Product;
 import de.hska.iwi.vs.lab.composite.portfolio.service.PortfolioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @EnableCircuitBreaker
@@ -40,22 +39,15 @@ public class PortfolioCompositeController {
     }
 
     @PutMapping(value = "/products")
-    public ResponseEntity<HttpStatus> addProduct(@RequestBody Product product) {
+    public ResponseEntity<HttpStatus> addProduct(@RequestBody String product) {
         log.info("COMPOSITE URL-PATH: / | METHOD: PUT");
 
         return portfolioService.addProduct(product);
     }
 
-    @GetMapping(value = "/products/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Category>> getProducts() {
-        log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
-
-        return portfolioService.getProducts();
-    }
-
     /******************************************************************************************************************/
     @PutMapping(value = "/categories")
-    public ResponseEntity<HttpStatus> addCategory(@RequestBody Category category) {
+    public ResponseEntity<HttpStatus> addCategory(@RequestBody String category) {
         log.info("COMPOSITE URL-PATH: / | METHOD: PUT");
 
         return portfolioService.addCategory(category);
@@ -68,10 +60,10 @@ public class PortfolioCompositeController {
         return portfolioService.deleteCategory(categoryId);
     }
 
-    @GetMapping(value = "/categories/get/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable int categoryId) {
+    @GetMapping(value = "/categories/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Category>> getCategoryById() {
         log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
 
-        return portfolioService.getCategoryById(categoryId);
+        return portfolioService.getCategories();
     }
 }

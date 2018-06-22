@@ -44,4 +44,12 @@ public class ProductCompositeController {
 
         return productService.findProductById(productId);
     }
+
+
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Product>> getProducts() {
+        log.info("COMPOSITE URL-PATH: /get | METHOD: GET");
+
+        return productService.getProducts();
+    }
 }

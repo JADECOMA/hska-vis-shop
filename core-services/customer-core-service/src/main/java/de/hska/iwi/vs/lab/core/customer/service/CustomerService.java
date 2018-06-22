@@ -1,7 +1,9 @@
 package de.hska.iwi.vs.lab.core.customer.service;
 
 import de.hska.iwi.vs.lab.core.customer.entity.Customer;
+import de.hska.iwi.vs.lab.core.customer.entity.Role;
 import de.hska.iwi.vs.lab.core.customer.repository.CustomerRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -15,16 +17,23 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public HttpStatus addCustomer(Customer customer) {
-        if (validate(customer)) {
+    public HttpStatus addCustomer(String customerString) {
+        Role role = new Role();
+        role.setId(2);
+        role.setLevel(1);
+        role.setTyp("user");
 
-            Customer newCustomer = new Customer();
-            newCustomer.setFirstname(customer.getFirstname());
-            newCustomer.setLastname(customer.getLastname());
-            newCustomer.setPassword(customer.getPassword());
-            newCustomer.setUsername(customer.getUsername());
-            newCustomer.setRole(customer.getRole());
-            customerRepository.save(newCustomer);
+        JSONObject json = new JSONObject(customerString);
+        Customer customer = new Customer();
+
+        customer.setPassword(json.getString("password"));
+        customer.setFirstname(json.getString("name"));
+        customer.setLastname(json.getString("lastname"));
+        customer.setUsername(json.getString("username"));
+        customer.setRole(role);
+
+        if (validate(customer)) {
+            customerRepository.save(customer);
 
             return HttpStatus.CREATED;
         } else {

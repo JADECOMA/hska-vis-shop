@@ -41,9 +41,9 @@ public class UserCompositeController {
         return userService.findByUsername(userName);
     }
 
-    @PutMapping(value = "/addCustomer", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
-        log.info("COMPOSITE URL-PATH: /addCustomer | METHOD: POST");
+    @PutMapping(value = "/addCustomer")
+    public ResponseEntity<Customer> addCustomer(@RequestBody String customer) {
+        log.info("COMPOSITE URL-PATH: /addCustomer | METHOD: PUT");
 
         return userService.addCustomer(customer);
     }

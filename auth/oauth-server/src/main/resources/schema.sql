@@ -63,14 +63,14 @@ create table if not exists ClientDetails (
   autoApproveScopes VARCHAR(255)
 );
 
-create table users(
+create table if not exists users(
 	username varchar(255) not null primary key,
 	password varchar(255) not null,
 	enabled boolean not null
 );
 
-create table authorities (
-	username varchar(255) not null,
+create table if not exists authorities (
+	username varchar(255) not null primary key,
 	authority varchar(255) not null,
 	constraint fk_authorities_users foreign key(username) references users(username)
 );
